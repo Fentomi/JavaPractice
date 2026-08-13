@@ -1,0 +1,1506 @@
+{
+  "info": {
+    "_postman_id": "41defa4d-fcfd-4e2d-be15-6839c02885bf",
+    "name": "YouTracker",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39149761"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "PositiveTests",
+          "item": [
+            {
+              "name": "createUser (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function() {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "pm.test('user created', function() {\r",
+                      "    pm.environment.set(\"userId\", pm.response.json().id);\r",
+                      "})"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"login\": \"testuser_{{$timestamp}}\",\r\n    \"fullName\": \"Test User\",\r\n    \"email\": \"testuser@example.com\",\r\n    \"password\": \"testuser_{{$timestamp}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/users?fields=id,login,fullName,email",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,login,fullName,email"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "getAllUsers (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 200', function() {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUri}}/users?fields=id,login,fullName,email",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,login,fullName,email"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "getUserById (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 200', function() {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/users/{{userId}}?fields=id,login,fullName,email",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "users",
+                    "{{userId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,login,fullName,email"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "updateUser (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"fullName\": \"Updated Test User\",\r\n    \"email\": \"updatedtestuser@example.com\",\r\n    \"login\": \"updatedtestuser_{{$timestamp}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/users/{{userId}}?fields=id,login,fullName,email",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "users",
+                    "{{userId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,login,fullName,email"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "NegativeTests",
+          "item": [
+            {
+              "name": "getUserByInvalidId (404)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 404', function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/users/invalid-id-12345",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "users",
+                    "invalid-id-12345"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "createUserWithoutPassword (400)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"login\": \"NoPasswordUser\",\n    \"fullName\": \"No Password User\",\n    \"email\": \"nopassword@example.com\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUri}}/users",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Project",
+      "item": [
+        {
+          "name": "PositiveTests",
+          "item": [
+            {
+              "name": "createProject (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "pm.test('Project created', function () {\r",
+                      "    pm.environment.set(\"projectId\", pm.response.json().id);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"TestProject_{{$timestamp}}\",\r\n    \"shortName\": \"TP_{{$timestamp}}\",\r\n    \"leader\": {\r\n        \"id\": \"{{userId}}\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/admin/projects?field=id,name,shortName",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "projects"
+                  ],
+                  "query": [
+                    {
+                      "key": "field",
+                      "value": "id,name,shortName"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "getAllProjects (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/admin/projects?field=id,name,shortName",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "projects"
+                  ],
+                  "query": [
+                    {
+                      "key": "field",
+                      "value": "id,name,shortName"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "getProjectById (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function() {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/admin/projects/{{projectId}}?fields=id,name,shortName",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "projects",
+                    "{{projectId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,name,shortName"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "updateProject (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"UpdatedTestProject_{{$timestamp}}\",\r\n    \"shortName\": \"UTP_{{$timestamp}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/admin/projects/{{projectId}}?fields=id,name,shortName,leader",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "projects",
+                    "{{projectId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,name,shortName,leader"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "deleteProject (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "pm.test(\"Project deleted\", function () {\r",
+                      "    pm.environment.unset(\"projectId\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseUri}}/admin/projects/{{projectId}}",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "projects",
+                    "{{projectId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "NegativeTests",
+          "item": [
+            {
+              "name": "getProjectByInvalidId (404)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 404', function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/admin/projects/invalid-project-123",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "projects",
+                    "invalid-project-123"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "createProjectWithoutShortName (400)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Project without shortName\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUri}}/admin/projects",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "projects"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Task",
+      "item": [
+        {
+          "name": "PositiveTests",
+          "item": [
+            {
+              "name": "createTask (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "pm.test(\"Task is created\", function () {\r",
+                      "    pm.environment.set(\"taskId\", pm.response.json().id);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"project\": {\r\n        \"id\": \"{{projectId}}\"\r\n    },\r\n    \"summary\": \"Task_{{$timestamp}}\",\r\n    \"description\": \"test description for Task_{{$timestamp}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues?fields=id,idReadable,summary,project(id,name)",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,idReadable,summary,project(id,name)"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "getAllTasks (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues?fields=id,idReadable,summary,project(id,name)",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,idReadable,summary,project(id,name)"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "getTaskById (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}?fields=id,idReadable,summary,project(id,name)",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,idReadable,summary,project(id,name)"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "updateTask (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"summary\": \"UpdatedTask_{{$timestamp}}\",\r\n    \"description\": \"updated test description for Task_{{$timestamp}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}?fields=id,idReadable,summary,project(id,name)",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,idReadable,summary,project(id,name)"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "deleteTask (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "pm.test(\"Task deleted\", function () {\r",
+                      "    pm.environment.unset(\"taskId\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "NegativeTests",
+          "item": [
+            {
+              "name": "getTaskByInvalidId (404)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 404', function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/issues/invalid-issue-999",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "invalid-issue-999"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "createIssueWithoutProject (400)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"summary\": \"Issue without project\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TaskComment",
+      "item": [
+        {
+          "name": "NegativeTests",
+          "item": [
+            {
+              "name": "getCommentByInvalidId (404)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 404', function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}/comments/invalid-comment-456",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}",
+                    "comments",
+                    "invalid-comment-456"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "createCommentWithoutText (400)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}/comments",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}",
+                    "comments"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "PositiveTests",
+          "item": [
+            {
+              "name": "createTaskComment (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "pm.test(\"Task created\", function () {\r",
+                      "    pm.environment.set(\"commentId\", pm.response.json().id);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"text\": \"testComment_{{$timestamp}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}/comments?fields=id,text,created",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}",
+                    "comments"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,text,created"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "getAllCommentsForTask (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}/comments?fields=id,text,created",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}",
+                    "comments"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,text,created"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "getCommentForTaskById (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}/comments/{{commentId}}?fields=id,text,created",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}",
+                    "comments",
+                    "{{commentId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,text,created"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "updateTaskComment (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"text\": \"updatedTestComment_{{$timestamp}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}/comments/{{commentId}}?fields=id,text,created",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}",
+                    "comments",
+                    "{{commentId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,text,created"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "deleteTaskComment (200)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "pm.test(\"Comment deleted\", function () {\r",
+                      "    pm.environment.unset(\"commentId\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseUri}}/issues/{{taskId}}/comments/{{commentId}}?fields=id,text,created",
+                  "host": [
+                    "{{baseUri}}"
+                  ],
+                  "path": [
+                    "issues",
+                    "{{taskId}}",
+                    "comments",
+                    "{{commentId}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,text,created"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
