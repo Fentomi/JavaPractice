@@ -31,7 +31,7 @@ public abstract class TestSpecification {
     System.out.println("--------------------------------------------------");
   }
 
-  protected String getLeaderId() {
+  protected static String getLeaderId() {
     return RestAssured
         .given()
         .when()
