@@ -11,9 +11,9 @@ public class UserReq {
   private String email;
   private String password;
 
-  public UserReq(String email, String fullName, String login) {
-    this.email = email;
-    this.fullName = fullName;
+  public UserReq(String login, String fullName, String email) {
     this.login = login;
+    this.fullName = fullName;
+    this.email = email;
   }
 }

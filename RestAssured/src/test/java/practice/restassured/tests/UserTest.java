@@ -86,7 +86,20 @@ public class UserTest extends BaseTest {
         .body("fullName", equalTo(fullName));
   }
 
-  //TODO: сделать тест на изменение данных пользователя через userApi.updateUser();
+  @Test
+  @DisplayName("Обновить пользователя - проверка полей после")
+  void updateUserTest() {
+    String updatedLogin = "updated" + createdUser.getLogin();
+    String updatedFullName = "Updated " + createdUser.getFullName();
+    String updatedEmail = "updated" + createdUser.getEmail();
+
+    userApi.updateUser(createdUser.getId(), updatedLogin, updatedFullName, updatedEmail)
+        .then().spec(Specifications.response200())
+        .body("id", equalTo(createdUser.getId()))
+        .body("login", equalTo(updatedLogin))
+        .body("fullName", equalTo(updatedFullName))
+        .body("email", equalTo(updatedEmail));
+  }
 
   @Test
   @DisplayName("Удаление пользователя")
