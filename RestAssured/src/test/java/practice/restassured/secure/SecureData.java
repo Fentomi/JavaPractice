@@ -1,7 +1,8 @@
 package practice.restassured.secure;
 
+import lombok.Getter;
+
 public class SecureData {
-  public static String getToken() {
-    return "perm-YWRtaW4=.NDItMA==.EiS1XOc87CRsYsJ7ckaPrPVBtGz7qw";
-  }
+  private @Getter static String token = "perm-YWRtaW4=.NDItMA==.O11eKvKsqveipnwIcL5nfIg9QaaGc7";
+  private @Getter static String URI = "http://localhost:8080/api";
 }
