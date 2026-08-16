@@ -68,4 +68,11 @@ public class ProjectTest extends BaseTest {
         .body("name", equalTo("updated"+createdProject.getName()))
         .body("shortName", equalTo("U"+createdProject.getShortName()));
   }
+
+  @Test
+  @DisplayName("Удаление проекта")
+  void deleteProjectTest() {
+    projectApi.deleteProject(createdProject.getId())
+        .then().spec(Specifications.response200());
+  }
 }
