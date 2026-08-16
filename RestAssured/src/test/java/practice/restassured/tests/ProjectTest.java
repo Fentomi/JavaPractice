@@ -80,7 +80,7 @@ public class ProjectTest extends BaseTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Попытка получить проект по неправильному айди - ошибка 400")
+  @DisplayName("Попытка получить проект по неправильному айди - ошибка 404")
   @CsvSource({"invalid-id-project"})
   void getProjectByInvalidId(String projectId) {
     projectApi.getProjectById(projectId)
@@ -88,7 +88,7 @@ public class ProjectTest extends BaseTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Попытка создать проект без shortName")
+  @DisplayName("Попытка создать проект без shortName - ошибка 400")
   @CsvSource("InvalidProjectName")
   void createProjectWithoutShortName(String name) {
     projectApi.createProject(name, createdUser.getId())
