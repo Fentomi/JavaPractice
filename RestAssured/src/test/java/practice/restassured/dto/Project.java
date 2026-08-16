@@ -1,19 +1,16 @@
 package practice.restassured.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Project {
   private String id;
-
-  public Project(String id) {
-    this.id = id;
-  }
-
-  public Project() {}
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
+  private String name;
+  private String shortName;
+  private @JsonProperty("$type") String type;
 }
