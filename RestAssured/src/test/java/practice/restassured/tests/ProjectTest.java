@@ -6,6 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.Matchers.*;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import practice.restassured.dto.Project;
 import practice.restassured.dto.User;
 import practice.restassured.specifications.Specifications;
@@ -74,5 +77,13 @@ public class ProjectTest extends BaseTest {
   void deleteProjectTest() {
     projectApi.deleteProject(createdProject.getId())
         .then().spec(Specifications.response200());
+  }
+
+  @ParameterizedTest
+  @DisplayName("Попытка получить проект по неправильному айди - ошибка 400")
+  @CsvSource({"invalid-id-project"})
+  void getProjectByInvalidId(String projectId) {
+    projectApi.getProjectById(projectId)
+        .then().spec(Specifications.response404());
   }
 }
