@@ -13,4 +13,10 @@ public class Project {
   private String name;
   private String shortName;
   private @JsonProperty("$type") String type;
+
+  public Project(String type, String name, String id) {
+    this.type = type;
+    this.name = name;
+    this.id = id;
+  }
 }
