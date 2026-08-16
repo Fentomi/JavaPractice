@@ -86,4 +86,12 @@ public class ProjectTest extends BaseTest {
     projectApi.getProjectById(projectId)
         .then().spec(Specifications.response404());
   }
+
+  @ParameterizedTest
+  @DisplayName("Попытка создать проект без shortName")
+  @CsvSource("InvalidProjectName")
+  void createProjectWithoutShortName(String name) {
+    projectApi.createProject(name, createdUser.getId())
+        .then().spec(Specifications.response400());
+  }
 }

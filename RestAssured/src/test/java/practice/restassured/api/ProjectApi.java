@@ -14,6 +14,12 @@ public class ProjectApi {
         .given().body(projectReq)
         .when().post("/admin/projects?fields=id,name,shortName");
   }
+  public Response createProject(String name, String userId) {
+    ProjectCreateReq projectReq = new ProjectCreateReq(name, new Leader(userId));
+    return RestAssured
+        .given().body(projectReq)
+        .when().post("/admin/projects?fields=id,name,shortName");
+  }
 
   public Response getAllProjects() {
     return RestAssured
