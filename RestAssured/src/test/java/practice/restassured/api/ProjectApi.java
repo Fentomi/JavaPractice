@@ -1,16 +1,15 @@
 package practice.restassured.api;
 
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import practice.restassured.model.Leader;
-import practice.restassured.pojo.ProjectReq;
-import practice.restassured.secure.SecureData;
+import practice.restassured.pojo.ProjectCreateReq;
+import practice.restassured.pojo.ProjectUpdateReq;
 
 public class ProjectApi {
 
   public Response createProject(String name, String shortName, String userId) {
-    ProjectReq projectReq = new ProjectReq(name, shortName, new Leader(userId));
+    ProjectCreateReq projectReq = new ProjectCreateReq(name, shortName, new Leader(userId));
     return RestAssured
         .given().body(projectReq)
         .when().post("/admin/projects?fields=id,name,shortName");
@@ -29,9 +28,9 @@ public class ProjectApi {
   }
 
   public Response updateProject(String projectId, String name, String shortName) {
-    ProjectReq projectReq = new ProjectReq(name, shortName);
+    ProjectUpdateReq projectUpdateReq = new ProjectUpdateReq(name, shortName);
     return RestAssured
-        .given().body(projectReq)
+        .given().body(projectUpdateReq)
         .when().post("/admin/projects/{projectId}?fields=id,name,shortName,leader", projectId);
   }
 

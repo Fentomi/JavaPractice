@@ -1,10 +1,11 @@
 package practice.restassured.tests;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.*;
 import practice.restassured.dto.Project;
 import practice.restassured.dto.User;
 import practice.restassured.specifications.Specifications;
@@ -27,14 +28,11 @@ public class ProjectTest extends BaseTest {
 
     createdUser = userApi.createUser(userLogin, userFullName, userEmail, userPassword)
         .then().extract().as(User.class);
-    System.out.println(createdUser);
 
     String createdProjectId = projectApi.createProject(
         name, shortName, createdUser.getId())
         .then().extract().jsonPath().getString("id");
     createdProject = projectApi.getProjectById(createdProjectId).then().extract().as(Project.class);
-    System.out.println(createdProjectId);
-    System.out.println(createdProject);
   }
 
   @AfterEach
@@ -44,15 +42,30 @@ public class ProjectTest extends BaseTest {
   }
 
   @Test
+  @DisplayName("Создание проекта - проверка полей")
   void createProjectTest() {
     assertEquals(name, createdProject.getName());
     assertEquals(shortName, createdProject.getShortName());
   }
 
   @Test
+  @DisplayName("Получение всего списка проектов - проверка ответа в формате списка")
   void getAllProjectsTest() {
     projectApi.getAllProjects()
         .then().spec(Specifications.response200())
-        .body("size()", Matchers.greaterThan(0));
+        .body("size()", greaterThan(0));
+  }
+
+  @Test
+  @DisplayName("Обновление проекта - проверка обновляемых полей")
+  void updateProjectTest() {
+    String updatedName = "updated"+createdProject.getName();
+    String updatedShortName = "U"+createdProject.getShortName();
+
+    projectApi.updateProject(createdProject.getId(), updatedName, updatedShortName)
+        .then().spec(Specifications.response200())
+        .body("id", equalTo(createdProject.getId()))
+        .body("name", equalTo("updated"+createdProject.getName()))
+        .body("shortName", equalTo("U"+createdProject.getShortName()));
   }
 }
