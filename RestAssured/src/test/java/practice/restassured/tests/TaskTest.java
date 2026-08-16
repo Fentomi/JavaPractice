@@ -1,14 +1,16 @@
 package practice.restassured.tests;
 
 
-import org.junit.jupiter.api.AfterEach;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import practice.restassured.dto.Project;
 import practice.restassured.dto.Task;
 import practice.restassured.dto.User;
+import practice.restassured.specifications.Specifications;
 
 import java.util.UUID;
 
@@ -47,10 +49,28 @@ public class TaskTest extends BaseTest {
   }
 
   @Test
-  @DisplayName("Создание задачи")
-  void createTask() {
+  @DisplayName("Создание задачи - проверка полей")
+  void createTaskTest() {
     assertEquals(createdTask.getSummary(), taskSummary);
     assertEquals(createdTask.getDescription(), taskDescription);
     assertNotNull(createdTask.getId());
+  }
+
+  @Test
+  @DisplayName("Получение всего списка измеющихся задач - количество полученных объектов больше нуля")
+  void getAllTasksTest() {
+    taskApi.getAllTasks()
+        .then().spec(Specifications.response200())
+        .body("size()", greaterThan(0));
+  }
+
+  @Test
+  @DisplayName("Получение задачи по айди")
+  void getTaskByIdTest() {
+    taskApi.getTaskById(createdTask.getId())
+        .then().spec(Specifications.response200())
+        .body("id", equalTo(createdTask.getId()))
+        .body("summary", equalTo(createdTask.getSummary()))
+        .body("description", equalTo(createdTask.getDescription()));
   }
 }

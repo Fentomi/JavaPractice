@@ -23,7 +23,7 @@ public class TaskApi {
   public Response getTaskById(String taskId) {
     return RestAssured
         .given()
-        .when().get("/issues/{taskId}?fields=id,idReadable,summary,project(id,name)", taskId);
+        .when().get("/issues/{taskId}?fields=id,idReadable,summary,project(id,name),description", taskId);
   }
 
   public Response updateTask(String taskId, String summary, String description) {
