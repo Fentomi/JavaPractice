@@ -65,12 +65,34 @@ public class TaskTest extends BaseTest {
   }
 
   @Test
-  @DisplayName("Получение задачи по айди")
+  @DisplayName("Получение задачи по айди - проверка полей")
   void getTaskByIdTest() {
     taskApi.getTaskById(createdTask.getId())
         .then().spec(Specifications.response200())
         .body("id", equalTo(createdTask.getId()))
         .body("summary", equalTo(createdTask.getSummary()))
         .body("description", equalTo(createdTask.getDescription()));
+  }
+
+  @Test
+  @DisplayName("Изменение задачи - проверка полей")
+  void updateTaskTest() {
+    String updatedSummary = "updated" + taskSummary;
+    String updatedDescription = "updated" + taskDescription;
+
+    taskApi.updateTask(createdTask.getId(), updatedSummary, updatedDescription)
+        .then().spec(Specifications.response200())
+        .body("id", equalTo(createdTask.getId()))
+        .body("summary", equalTo(updatedSummary))
+        .body("description", equalTo(updatedDescription));
+  }
+
+  @Test
+  @DisplayName("Удаление задачи - проверка кода")
+  void deleteTaskTest() {
+    taskApi.deleteTask(createdTask.getId())
+        .then().spec(Specifications.response200());
+    taskApi.getTaskById(createdTask.getId())
+        .then().spec(Specifications.response404());
   }
 }
