@@ -12,4 +12,9 @@ public class TaskCreateReq {
   private Project project;
   private String summary;
   private String description;
+
+  public TaskCreateReq(String summary, String description) {
+    this.summary = summary;
+    this.description = description;
+  }
 }

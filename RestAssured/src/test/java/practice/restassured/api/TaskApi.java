@@ -14,6 +14,12 @@ public class TaskApi {
         .given().body(taskCreateReq)
         .when().post("/issues?fields=id,idReadable,summary,project(id,name),description");
   }
+  public Response createTask(String summary, String description) {
+    TaskCreateReq taskCreateReq = new TaskCreateReq(summary, description);
+    return RestAssured
+        .given().body(taskCreateReq)
+        .when().post("/issues?fields=id,idReadable,summary,project(id,name),description");
+  }
 
   public Response getAllTasks() {
     return RestAssured

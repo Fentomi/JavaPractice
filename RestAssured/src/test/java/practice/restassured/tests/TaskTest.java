@@ -7,6 +7,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import practice.restassured.dto.Project;
 import practice.restassured.dto.Task;
 import practice.restassured.dto.User;
@@ -94,5 +96,21 @@ public class TaskTest extends BaseTest {
         .then().spec(Specifications.response200());
     taskApi.getTaskById(createdTask.getId())
         .then().spec(Specifications.response404());
+  }
+
+  @ParameterizedTest
+  @DisplayName("Попытка получения задачи по неправильному айди - 404 ошибка")
+  @CsvSource({"invalid-id"})
+  void getTaskByInvalidId(String invalidId) {
+    taskApi.getTaskById(invalidId)
+        .then().spec(Specifications.response404());
+  }
+
+  @ParameterizedTest
+  @DisplayName("Попытка создания задачи без projectId - 400 ошибка")
+  @CsvSource({"Задача без родителя, Описание для задачи"})
+  void createTaskWithoutProject(String taskSummary, String taskDescription) {
+    taskApi.createTask(taskSummary, taskDescription)
+        .then().spec(Specifications.response400());
   }
 }
