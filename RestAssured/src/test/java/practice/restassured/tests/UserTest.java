@@ -16,6 +16,7 @@ public class UserTest extends BaseTest {
   private final String fullName = "Test User " + randomUUID;
   private final String email = login + "@mail.ru";
   private final String password = "password" + randomUUID;
+  private final String successorUserId = "2-1";
   private User createdUser;
 
   @BeforeEach
@@ -28,7 +29,7 @@ public class UserTest extends BaseTest {
 
   @AfterEach
   void tearDown() {
-    userApi.deleteUser(createdUser.getId(), "2-1");
+    userApi.deleteUser(createdUser.getId(), successorUserId);
     System.out.println("Пользователь " + createdUser.getLogin() + " удален");
   }
 
@@ -104,7 +105,7 @@ public class UserTest extends BaseTest {
   @Test
   @DisplayName("Удаление пользователя")
   void deleteUserTest() {
-    userApi.deleteUser(createdUser.getId(), "2-1")
+    userApi.deleteUser(createdUser.getId(), successorUserId)
         .then().spec(Specifications.response200());
   }
 
