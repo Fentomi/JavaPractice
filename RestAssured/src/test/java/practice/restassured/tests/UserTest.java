@@ -126,17 +126,4 @@ public class UserTest extends BaseTest {
         .then().spec(Specifications.response400())
         .body("error", equalTo("Bad Request"));
   }
-
-  @ParameterizedTest
-  @DisplayName("Создание пользователя через вводные параметры - проверка полей")
-  @Disabled("Включать тест только в случае уникальных CsvSource данных")
-  @CsvSource({"yourLogin, yourFullName, yourEmail@mail.ru, yourPassword"})
-  void createUserWithParameters(String login, String fullName, String email, String password) {
-    userApi.createUser(login, fullName, email, password)
-        .then().spec(Specifications.response200())
-        .body("login", equalTo(login))
-        .body("email", equalTo(email))
-        .body("fullName", equalTo(fullName))
-        .body("id", notNullValue());
-  }
 }
