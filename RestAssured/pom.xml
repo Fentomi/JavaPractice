@@ -119,6 +119,7 @@
           <parallel>none</parallel>
           <forkCount>0</forkCount>
           <reuseForks>false</reuseForks>
+          <runOrder>alphabetical</runOrder>
         </configuration>
       </plugin>
     </plugins>

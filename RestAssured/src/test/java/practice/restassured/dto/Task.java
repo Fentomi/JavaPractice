@@ -14,7 +14,6 @@ public class Task {
   private String summary;
   private String description;
   private String idReadable;
-  private Project project;
   private String id;
   private @JsonProperty("$type") String type;
 }

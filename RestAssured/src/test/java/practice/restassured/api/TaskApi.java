@@ -2,14 +2,13 @@ package practice.restassured.api;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import practice.restassured.model.Project;
 import practice.restassured.pojo.TaskCreateReq;
 import practice.restassured.pojo.TaskUpdateReq;
 
 public class TaskApi {
 
   public Response createTask(String projectId, String summary, String description) {
-    TaskCreateReq taskCreateReq = new TaskCreateReq(new Project(projectId), summary, description);
+    TaskCreateReq taskCreateReq = new TaskCreateReq(summary, description, projectId);
     return RestAssured
         .given().body(taskCreateReq)
         .when().post("/issues?fields=id,idReadable,summary,project(id,name),description");

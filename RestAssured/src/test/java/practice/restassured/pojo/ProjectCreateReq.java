@@ -1,22 +1,30 @@
 package practice.restassured.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import practice.restassured.model.Leader;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProjectCreateReq {
   private String name;
   private String shortName;
   private Leader leader;
 
-  public ProjectCreateReq(String name, Leader leader) {
+  @Data
+  @AllArgsConstructor
+  private static class Leader {
+    private String id;
+  }
+
+  public ProjectCreateReq(String name, String leaderId) {
     this.name = name;
-    this.leader = leader;
+    this.leader = new Leader(leaderId);
+  }
+
+  public ProjectCreateReq(String name, String shortName, String leaderId) {
+    this.name = name;
+    this.shortName = shortName;
+    this.leader = new Leader(leaderId);
   }
 }

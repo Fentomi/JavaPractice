@@ -2,20 +2,19 @@ package practice.restassured.api;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import practice.restassured.model.Leader;
 import practice.restassured.pojo.ProjectCreateReq;
 import practice.restassured.pojo.ProjectUpdateReq;
 
 public class ProjectApi {
 
   public Response createProject(String name, String shortName, String userId) {
-    ProjectCreateReq projectReq = new ProjectCreateReq(name, shortName, new Leader(userId));
+    ProjectCreateReq projectReq = new ProjectCreateReq(name, shortName, userId);
     return RestAssured
         .given().body(projectReq)
         .when().post("/admin/projects?fields=id,name,shortName");
   }
   public Response createProject(String name, String userId) {
-    ProjectCreateReq projectReq = new ProjectCreateReq(name, new Leader(userId));
+    ProjectCreateReq projectReq = new ProjectCreateReq(name, userId);
     return RestAssured
         .given().body(projectReq)
         .when().post("/admin/projects?fields=id,name,shortName");

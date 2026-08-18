@@ -93,19 +93,18 @@ public class ProjectTest extends BaseTest {
         .then().spec(Specifications.response200());
   }
 
-  @ParameterizedTest
-  @DisplayName("Попытка получить проект по неправильному айди - ошибка 404")
-  @CsvSource({"invalid-id-project"})
-  void getProjectByInvalidId(String projectId) {
-    projectApi.getProjectById(projectId)
-        .then().spec(Specifications.response404());
+  @Test
+  @DisplayName("Попытка создать проект без shortName - ошибка 400")
+  void createProjectWithoutShortName() {
+    projectApi.createProject(createdProject.getName(), createdUser.getId())
+        .then().spec(Specifications.response400());
   }
 
   @ParameterizedTest
-  @DisplayName("Попытка создать проект без shortName - ошибка 400")
-  @CsvSource("InvalidProjectName")
-  void createProjectWithoutShortName(String name) {
-    projectApi.createProject(name, createdUser.getId())
-        .then().spec(Specifications.response400());
+  @DisplayName("Попытка получить проект по неправильному айди - ошибка 404")
+  @CsvSource({"invalid-id-project", "12931483457043285734895340751943805"})
+  void getProjectByInvalidId(String projectId) {
+    projectApi.getProjectById(projectId)
+        .then().spec(Specifications.response404());
   }
 }
