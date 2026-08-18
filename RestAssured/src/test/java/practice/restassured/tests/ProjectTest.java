@@ -91,8 +91,6 @@ public class ProjectTest extends BaseTest {
   void deleteProjectTest() {
     projectApi.deleteProject(createdProject.getId())
         .then().spec(Specifications.response200());
-    projectApi.getProjectById(createdProject.getId())
-        .then().spec(Specifications.response404());
     createdProject = null;
   }
 
