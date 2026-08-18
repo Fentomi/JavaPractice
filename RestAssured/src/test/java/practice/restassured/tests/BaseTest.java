@@ -1,5 +1,6 @@
 package practice.restassured.tests;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import practice.restassured.api.TaskCommentApi;
@@ -22,5 +23,6 @@ public abstract class BaseTest {
     taskCommentApi = new TaskCommentApi();
 
     RestAssured.requestSpecification = Specifications.reqSpec();
+    RestAssured.filters(new AllureRestAssured());
   }
 }

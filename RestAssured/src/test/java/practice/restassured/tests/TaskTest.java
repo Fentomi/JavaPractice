@@ -3,10 +3,8 @@ package practice.restassured.tests;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import practice.restassured.dto.Project;
@@ -20,34 +18,49 @@ public class TaskTest extends BaseTest {
   private final String randomUUID = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
   private final String taskSummary = "Task_"+randomUUID;
   private final String taskDescription = "Description_"+randomUUID;
-  private final String successorId = "2-1";
-  private User createdUser;
-  private Project createdProject;
+  private static User createdUser;
+  private static Project createdProject;
   private Task createdTask;
 
-  @BeforeEach
-  void setUp() {
-    String userLogin = "userTask_" + randomUUID;
-    String userPassword = "passwordTask_" + randomUUID;
+  @BeforeAll
+  static void beforeAll() {
+    String userLogin = "userTask";
+    String userPassword = "passwordTask";
     String userEmail = userLogin + "@mail.ru";
-    String userFullName = "User Task " + randomUUID;
+    String userFullName = "User Task";
     createdUser = userApi.createUser(userLogin, userFullName, userEmail, userPassword)
         .then().extract().as(User.class);
 
-    String projectName = "projectTask_" + randomUUID;
-    String projectShortName = "PT_" + randomUUID;
+    String projectName = "projectTask";
+    String projectShortName = "PT";
     createdProject = projectApi.createProject(projectName, projectShortName, createdUser.getId())
         .then().extract().as(Project.class);
+  }
 
+  @BeforeEach
+  void setUp() {
     createdTask = taskApi.createTask(createdProject.getId(), taskSummary, taskDescription)
         .then().extract().as(Task.class);
   }
 
+  @AfterAll
+  static void afterAll() {
+    if (createdProject != null) {
+      projectApi.deleteProject(createdProject.getId());
+      System.out.println("Удален проект: " + createdProject);
+    }
+    if (createdUser != null) {
+      userApi.deleteUser(createdUser.getId(), "2-1");
+      System.out.println("Удален пользователь: " + createdUser);
+    }
+  }
+
   @AfterEach
   void tearDown() {
-    taskApi.deleteTask(createdTask.getId());
-    projectApi.deleteProject(createdProject.getId());
-    userApi.deleteUser(createdUser.getId(), successorId);
+    if (createdTask != null) {
+      taskApi.deleteTask(createdTask.getId());
+      System.out.println("Удалена задача: " + createdTask);
+    }
   }
 
   @Test

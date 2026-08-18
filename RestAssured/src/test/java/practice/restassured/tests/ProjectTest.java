@@ -1,9 +1,7 @@
 package practice.restassured.tests;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.Matchers.*;
 
@@ -19,29 +17,45 @@ public class ProjectTest extends BaseTest {
   private final String randomUUID = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
   private final String name = "TestProject_" + randomUUID;
   private final String shortName = "TP_" + randomUUID;
-  private User createdUser;
+  private static User createdUser;
   private Project createdProject;
 
-  @BeforeEach
-  void setUp() {
-    String userLogin = "userProject_" + randomUUID;
-    String userPassword = "userPassword" + randomUUID;
-    String userFullName = "User Project " + randomUUID;
+  @BeforeAll
+  static void beforeAll() {
+    String userLogin = "userProject";
+    String userPassword = "userPassword";
+    String userFullName = "User Project";
     String userEmail = userLogin + "@mail.ru";
 
     createdUser = userApi.createUser(userLogin, userFullName, userEmail, userPassword)
         .then().extract().as(User.class);
+    System.out.println("Создан пользователь: " + createdUser);
+  }
 
+  @BeforeEach
+  void setUp() {
     String createdProjectId = projectApi.createProject(
         name, shortName, createdUser.getId())
         .then().extract().jsonPath().getString("id");
+    System.out.println(createdProjectId);
     createdProject = projectApi.getProjectById(createdProjectId).then().extract().as(Project.class);
+    System.out.println("Создан проект: " + createdProject);
+  }
+
+  @AfterAll
+  static void afterAll() {
+    if (createdUser != null) {
+      userApi.deleteUser(createdUser.getId(), "2-1");
+      System.out.println("Удален пользователь: " + createdUser);
+    }
   }
 
   @AfterEach
   void tearDown() {
-    projectApi.deleteProject(createdProject.getId());
-    userApi.deleteUser(createdUser.getId(), "2-1");
+    if (createdProject != null) {
+      projectApi.deleteProject(createdProject.getId());
+      System.out.println("Удален проект: " + createdProject);
+    }
   }
 
   @Test

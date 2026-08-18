@@ -29,8 +29,10 @@ public class UserTest extends BaseTest {
 
   @AfterEach
   void tearDown() {
-    userApi.deleteUser(createdUser.getId(), successorUserId);
-    System.out.println("Пользователь " + createdUser.getLogin() + " удален");
+    if (createdUser != null) {
+      userApi.deleteUser(createdUser.getId(), successorUserId);
+      System.out.println("Пользователь " + createdUser.getLogin() + " удален");
+    }
   }
 
   @Test
