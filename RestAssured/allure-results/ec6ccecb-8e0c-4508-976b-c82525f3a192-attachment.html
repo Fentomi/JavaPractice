@@ -1,0 +1,28 @@
+<div>POST to http://localhost:8080/api/issues/3-201?fields=id%2CidReadable%2Csummary%2Cproject%28id%2Cname%29%2Cdescription</div>
+
+    <h4>Body</h4>
+    <div>
+    <pre class="preformated-text">
+{
+    &quot;summary&quot;: &quot;updatedTask_dd2d391e&quot;,
+    &quot;description&quot;: &quot;updatedDescription_dd2d391e&quot;
+}    </pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>Authorization: Bearer perm-YWRtaW4=.NDItMA==.O11eKvKsqveipnwIcL5nfIg9QaaGc7</div>
+            <div>Accept: */*</div>
+            <div>Content-Type: application/json</div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        curl -v -X POST &#39;http://localhost:8080/api/issues/3-201?fields=id%2CidReadable%2Csummary%2Cproject%28id%2Cname%29%2Cdescription&#39; -H &#39;Authorization: Bearer perm-YWRtaW4=.NDItMA==.O11eKvKsqveipnwIcL5nfIg9QaaGc7&#39; -H &#39;Accept: */*&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;summary&quot;: &quot;updatedTask_dd2d391e&quot;,
+    &quot;description&quot;: &quot;updatedDescription_dd2d391e&quot;
+}&#39;
+    </div>
+
