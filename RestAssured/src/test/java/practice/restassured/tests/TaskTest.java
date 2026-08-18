@@ -109,11 +109,12 @@ public class TaskTest extends BaseTest {
         .then().spec(Specifications.response200());
     taskApi.getTaskById(createdTask.getId())
         .then().spec(Specifications.response404());
+    createdTask = null;
   }
 
   @ParameterizedTest
   @DisplayName("Попытка получения задачи по неправильному айди - 404 ошибка")
-  @CsvSource({"invalid-id"})
+  @CsvSource({"invalid-id", "67676767676767", "22813372281337"})
   void getTaskByInvalidId(String invalidId) {
     taskApi.getTaskById(invalidId)
         .then().spec(Specifications.response404());

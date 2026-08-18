@@ -40,4 +40,4 @@ build/
 
 ### Allure ###
 .allure/
-allure-results
+target/allure-results

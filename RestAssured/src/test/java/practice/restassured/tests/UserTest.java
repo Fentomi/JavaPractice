@@ -109,11 +109,14 @@ public class UserTest extends BaseTest {
   void deleteUserTest() {
     userApi.deleteUser(createdUser.getId(), successorUserId)
         .then().spec(Specifications.response200());
+    userApi.getUserById(createdUser.getId())
+        .then().spec(Specifications.response404());
+    createdUser = null;
   }
 
   @ParameterizedTest
   @DisplayName("Попытка получить несуществующего пользователя - 404 ошибка")
-  @CsvSource({"invalid-id-12345"})
+  @CsvSource({"invalid-id-12345", "67676767676767", "22813372281337"})
   void getUserByInvalidId(String id) {
     userApi.getUserById(id)
         .then().spec(Specifications.response404())

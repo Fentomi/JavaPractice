@@ -91,6 +91,9 @@ public class ProjectTest extends BaseTest {
   void deleteProjectTest() {
     projectApi.deleteProject(createdProject.getId())
         .then().spec(Specifications.response200());
+    projectApi.getProjectById(createdProject.getId())
+        .then().spec(Specifications.response404());
+    createdProject = null;
   }
 
   @Test
@@ -102,7 +105,7 @@ public class ProjectTest extends BaseTest {
 
   @ParameterizedTest
   @DisplayName("Попытка получить проект по неправильному айди - ошибка 404")
-  @CsvSource({"invalid-id-project", "12931483457043285734895340751943805"})
+  @CsvSource({"invalid-id-project", "67676767676767", "22813372281337"})
   void getProjectByInvalidId(String projectId) {
     projectApi.getProjectById(projectId)
         .then().spec(Specifications.response404());
