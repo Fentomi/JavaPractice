@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    environment {
+        JAVA_HOME = '/opt/homebrew/Cellar/openjdk@21/21.0.12/libexec/openjdk.jdk/Contents/Home'
+        PATH = "/opt/homebrew/bin:/usr/local/bin:${JAVA_HOME}/bin:${PATH}"
+        DOCKER_HOST = 'unix:///Users/fentomi/.docker/run/docker.sock'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        stage('Tests') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+    post {
+        always {
+            junit testResults: '**/target/surefire-reports/*.xml',
+                  allowEmptyResults: true
+        }
+    }
+}
